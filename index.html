@@ -128,12 +128,47 @@
      linear-gradient(120deg,var(--camilo),var(--gold),var(--sofia)) border-box;}
   .next-flag{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:flex;align-items:center;gap:7px}
   .countdown{font-family:'Anton',sans-serif;font-size:13px;color:var(--ink);background:rgba(0,0,0,.25);padding:2px 10px;border-radius:999px;letter-spacing:.04em}
-  .loc{margin-top:12px;display:flex;align-items:center;justify-content:center;gap:7px;flex-wrap:wrap;
-     font-size:12px;font-weight:600;color:var(--muted);background:rgba(0,0,0,.2);border:1px solid var(--panel-brd);
-     border-radius:12px;padding:8px 12px;text-align:center}
-  .loc .pin{font-size:14px;filter:none}
-  .loc b{color:var(--ink);font-weight:800}
-  .loc .sep{color:var(--muted2)}
+  .loc{margin-top:11px;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--muted)}
+  .loc .pin{font-size:13px}
+  .loc b{color:var(--ink);font-weight:700}
+
+  /* ---------- action buttons ---------- */
+  .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 4px}
+  .action-btn{background:var(--panel);border:1px solid var(--panel-brd);color:var(--ink);
+     padding:13px 10px;border-radius:14px;font-family:'Hanken Grotesk',sans-serif;font-weight:800;font-size:13.5px;
+     cursor:pointer;letter-spacing:.01em;transition:.18s;display:flex;align-items:center;justify-content:center;gap:6px}
+  .action-btn:active{transform:scale(.97)}
+  .action-btn.gold{background:linear-gradient(120deg,rgba(255,210,63,.2),rgba(255,138,61,.14));
+     border-color:rgba(255,210,63,.42);color:var(--gold)}
+
+  /* ---------- modal (bottom sheet) ---------- */
+  .modal-overlay{position:fixed;inset:0;z-index:50;background:rgba(8,4,16,.72);backdrop-filter:blur(6px);
+     display:none;align-items:flex-end;justify-content:center}
+  .modal-overlay.open{display:flex;animation:fade .25s}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .modal{width:100%;max-width:var(--maxw);background:linear-gradient(180deg,#241237,#180d29);
+     border:1px solid var(--panel-brd);border-bottom:none;border-radius:24px 24px 0 0;
+     padding:26px 22px calc(30px + env(safe-area-inset-bottom));position:relative;
+     box-shadow:0 -20px 60px rgba(0,0,0,.5);animation:slideup .34s cubic-bezier(.2,.9,.3,1);max-height:90vh;overflow-y:auto}
+  @keyframes slideup{from{transform:translateY(100%)}to{transform:none}}
+  .modal-x{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;
+     background:var(--panel);border:1px solid var(--panel-brd);color:var(--ink);font-size:15px;cursor:pointer}
+  .modal-emoji{font-size:34px;margin-bottom:2px}
+  .modal h3{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.02em;font-size:26px;margin-bottom:8px}
+  .modal-sub{color:var(--muted);font-size:13.5px;margin-bottom:14px}
+  .modal p{font-size:14.5px;margin-bottom:10px;line-height:1.5}
+  table.rules{width:100%;border-collapse:collapse;margin:4px 0 12px}
+  table.rules th,table.rules td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--panel-brd);font-size:14px}
+  table.rules th{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:800}
+  table.rules th:not(:first-child),table.rules td:not(:first-child){text-align:center;font-family:'Anton',sans-serif;font-weight:400;width:62px}
+  table.rules td:first-child{color:var(--ink);font-weight:600}
+  table.rules tr.max td{color:var(--gold);border-bottom:none;border-top:2px solid rgba(255,210,63,.3)}
+  table.rules tr.max td:first-child{font-weight:800}
+  .modal-note{color:var(--muted2);font-size:12px;margin-top:6px}
+  .prize-lead{font-size:16px}
+  .prize-box{background:linear-gradient(120deg,rgba(22,224,212,.13),rgba(255,46,126,.13));
+     border:1px solid var(--panel-brd);border-radius:16px;padding:16px;font-size:15px;margin:14px 0;line-height:1.55}
+  .prize-box b{color:var(--gold)}
 
   .more-btn{width:100%;background:var(--panel);border:1px solid var(--panel-brd);color:var(--ink);
      padding:12px;border-radius:14px;font-family:'Hanken Grotesk';font-weight:700;font-size:14px;cursor:pointer;margin-top:2px;letter-spacing:.02em}
@@ -174,6 +209,40 @@
     Datos en vivo desde Google Sheets · se actualiza solo cada minuto<br/>
     Hecho con cariño para Camilo &amp; Sofía 🏆
   </footer>
+</div>
+
+<!-- ===== MODAL: REGLAS ===== -->
+<div class="modal-overlay" id="modal-reglas">
+  <div class="modal">
+    <button class="modal-x" aria-label="Cerrar">✕</button>
+    <div class="modal-emoji">📋</div>
+    <h3>Reglas y puntos</h3>
+    <p class="modal-sub">Los cuatro criterios se <b>suman</b>. En eliminatorias todo vale el <b>doble</b>. Clavar el marcador exacto da el puntaje máximo.</p>
+    <table class="rules">
+      <thead><tr><th>Criterio</th><th>Grupos</th><th>Elim.</th></tr></thead>
+      <tbody>
+        <tr><td>Acertar ganador o empate</td><td>5</td><td>10</td></tr>
+        <tr><td>Goles del equipo local</td><td>2</td><td>4</td></tr>
+        <tr><td>Goles del equipo visitante</td><td>2</td><td>4</td></tr>
+        <tr><td>Acertar diferencia de goles</td><td>1</td><td>2</td></tr>
+        <tr class="max"><td>Máximo por partido</td><td>10</td><td>20</td></tr>
+      </tbody>
+    </table>
+    <p class="modal-note">Sin marcador todavía → sin puntos. Si no hubo predicción → 0 pts. Las predicciones se cargan antes de cada partido en el Google Sheet.</p>
+  </div>
+</div>
+
+<!-- ===== MODAL: PREMIO ===== -->
+<div class="modal-overlay" id="modal-premio">
+  <div class="modal">
+    <button class="modal-x" aria-label="Cerrar">✕</button>
+    <div class="modal-emoji">🏆</div>
+    <h3>El premio</h3>
+    <p class="prize-lead">Camilo &amp; Sofía se casaron el <b>9 de enero de 2026</b> 💍</p>
+    <p>Todavía no se han ido de <b>luna de miel</b> ni han escogido el destino…</p>
+    <div class="prize-box">✈️ Quien <b>gane la quiniela</b> se gana <b>elegir el destino</b> del viaje — para hacerlo entre el <b>Q4 de 2026</b> y el <b>Q1 de 2027</b>.</div>
+    <p class="modal-note">Que gane el mejor pronosticador 😏</p>
+  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
@@ -281,6 +350,12 @@ function render(rows){
     </div>
   </div></section>`;
 
+  /* ---- BOTONES ---- */
+  html += `<div class="actions">
+    <button class="action-btn" onclick="openModal('reglas')">📋 Reglas y puntos</button>
+    <button class="action-btn gold" onclick="openModal('premio')">🏆 El premio</button>
+  </div>`;
+
   /* ---- PRÓXIMOS ---- */
   html += `<section class="sec"><div class="sec-h"><h2>Próximos</h2><span class="count">${upRows.length}</span></div>`;
   if(!upRows.length){ html += `<div class="empty-state">No quedan partidos por jugar 🏁</div>`; }
@@ -308,19 +383,14 @@ function matchCard(r, idx, isNext){
   const tbdL = isTBD(r.Local), tbdR = isTBD(r.Visitante);
   const chip = `<span class="chip" style="background:${fcolor(r.Fase)}">${r.Fase}${r.Grupo?(" · "+r.Grupo):""}</span>`;
 
-  // header right
-  let topRight;
+  // fecha SIEMPRE arriba a la derecha (en todas las tarjetas)
   const k = kickoff(r);
-  if(isNext && k && st!=="done"){
-    topRight = `<span class="countdown">${countdownTxt(k)}</span>`;
-  } else {
-    topRight = `<div class="when"><b>${fmtDay(r)}</b> · ${r.Hora_CDMX} <span style="color:var(--muted2)">CDMX</span></div>`;
-  }
+  const topRight = `<div class="when"><b>${fmtDay(r)}</b> · ${r.Hora_CDMX} <span style="color:var(--muted2)">CDMX</span></div>`;
 
-  // status badge
+  // badge de esquina solo en tarjetas NO destacadas (la destacada lleva su propio rótulo)
   let badge = "";
-  if(st==="live") badge = `<div class="status live">● En juego</div>`;
-  else if(st==="pending") badge = `<div class="status pend">Por cargar</div>`;
+  if(!isNext && st==="live") badge = `<div class="status live">● En juego</div>`;
+  else if(!isNext && st==="pending") badge = `<div class="status pend">Por cargar</div>`;
 
   // center: score or vs/time
   let center;
@@ -352,17 +422,19 @@ function matchCard(r, idx, isNext){
     </div>
   </div>`;
 
-  // sede + fecha (solo en la tarjeta destacada del partido actual/siguiente)
-  const locLine = (isNext && has(r.Sede)) ? `<div class="loc">
-      <span class="pin">📍</span><b>${r.Sede}</b>
-      <span class="sep">·</span>${fmtDay(r)}<span class="sep">·</span>${r.Hora_CDMX} CDMX
-    </div>` : "";
+  // rótulo de estado: una sola vez, solo en la tarjeta destacada
+  const stateLabel = st==="live" ? "🔴 Jugándose ahora"
+                   : st==="pending" ? "⏳ Pendiente de cargar"
+                   : "⚡ Próximo partido";
+  const showCd = st==="upcoming" && k;
+  const nextFlag = isNext ? `<div class="next-flag">${stateLabel}${showCd?` <span class="countdown">${countdownTxt(k)}</span>`:""}</div>` : "";
 
-  const nextLabel = st==="live" ? "🔴 Jugándose ahora" : "⚡ Próximo partido";
+  // ubicación (solo ciudad) en TODAS las tarjetas — la fecha ya va arriba a la derecha
+  const locLine = has(r.Sede) ? `<div class="loc"><span class="pin">📍</span><b>${r.Sede}</b></div>` : "";
 
   return `<div class="card ${isNext?'next-hero':''}" style="animation-delay:${Math.min(idx*45,360)}ms">
     ${badge}
-    ${isNext?`<div class="next-flag">${nextLabel} <span class="countdown">${k?countdownTxt(k):""}</span></div>`:""}
+    ${nextFlag}
     <div class="card-top">${chip}${topRight}</div>
     <div class="teams">
       ${teamHtml(r.Local,tbdL,false)}
@@ -401,6 +473,15 @@ async function load(){
     }
   }
 }
+
+/* ============== MODALES ============== */
+function openModal(id){ const m=document.getElementById("modal-"+id); if(m){ m.classList.add("open"); document.body.style.overflow="hidden"; } }
+function closeModal(m){ m.classList.remove("open"); document.body.style.overflow=""; }
+document.querySelectorAll(".modal-overlay").forEach(ov=>{
+  ov.addEventListener("click", e=>{ if(e.target===ov) closeModal(ov); });
+  ov.querySelector(".modal-x").addEventListener("click", ()=>closeModal(ov));
+});
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") document.querySelectorAll(".modal-overlay.open").forEach(closeModal); });
 
 $("#refreshBtn").addEventListener("click",()=>{ $("#refreshBtn").textContent="↻"; load(); });
 load();
